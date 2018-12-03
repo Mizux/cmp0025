@@ -17,7 +17,8 @@ endif()
 
 add_executable(foo "foo.cc")
 target_compile_options(foo PUBLIC
-  $<$<BOOL:${USING_LLVM}>:-DUSE_LLVM>
+  $<$<BOOL:${USING_LLVM}>:-DUSE_LLVM_SET>
+  $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:-DUSE_LLVM_OR>
   $<$<CXX_COMPILER_ID:Clang>:-DUSE_CLANG>
   $<$<CXX_COMPILER_ID:AppleClang>:-DUSE_APPLE_CLANG>)
 
