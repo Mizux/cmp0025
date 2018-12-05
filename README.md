@@ -6,8 +6,9 @@ Test `CXX_COMPILER_ID` behaviour in generator expression while using `CMP0025` t
 ## Policy CMP0025
 [CMP0025](https://cmake.org/cmake/help/latest/policy/CMP0025.html): Compiler id for Apple Clang is now `AppleClang`.
 
-When using `$<CXX_COMPILER_ID:Clang>` and having CMP0025 to `NEW` then AppleClang won't match it.
+When using `$<CXX_COMPILER_ID:Clang>` and having CMP0025 set to `NEW` then `AppleClang` won't match it.
 
+## Matching both
 To match both compilers with `CMP0025` set to `NEW`:
 1. first create a variable:
 ```cmake
@@ -20,11 +21,12 @@ endif()
 
 2. Use it in your generator expression:
 ```cmake
+target_compile_definition(target PUBLIC
 $<$<BOOL:${USING_LLVM}>:-DUSE_LLVM>
 ```
 
 note: you may also use:
 ```cmake
+target_compile_definition(target PUBLIC
 $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:-DUSE_LLVM>
 ```
-
